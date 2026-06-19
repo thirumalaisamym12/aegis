@@ -21,3 +21,5 @@ class AgentState(TypedDict):
     quality_score: float
 
     status: str
+
+    research: Dict[str, Any]
