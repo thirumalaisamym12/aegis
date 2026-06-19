@@ -28,4 +28,19 @@ agent = SupervisorAgent()
 
 response = agent.execute(state)
 
-print(response)
+print()
+
+print("Agent:", response.agent_name)
+
+print("Content:", response.content)
+
+print("Confidence:", response.confidence)
+
+print("Next Agent:", response.next_agent)
+
+print()
+
+print("Plan:")
+
+for step in response.metadata["plan"]:
+    print("-", step)

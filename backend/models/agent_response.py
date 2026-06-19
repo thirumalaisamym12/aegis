@@ -1,3 +1,5 @@
+from typing import Any
+
 from pydantic import BaseModel
 
 
@@ -12,4 +14,4 @@ class AgentResponse(BaseModel):
 
     next_agent: str
 
-    metadata: dict = {}
+    metadata: dict[str, Any] = {}
