@@ -23,3 +23,5 @@ class AgentState(TypedDict):
     status: str
 
     research: Dict[str, Any]
+
+    code: Dict[str, Any]
