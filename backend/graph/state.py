@@ -27,3 +27,7 @@ class AgentState(TypedDict):
     code: Dict[str, Any]
 
     validation: Dict[str, Any]
+
+    retry_count: int
+    
+    max_retries: int

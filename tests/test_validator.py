@@ -14,7 +14,9 @@ initial_state = {
     "status": "started",
     "research": {},
     "code": {},
-    "validation": {}
+    "validation": {},
+    "retry_count": 0,
+    "max_retries": 3,
 }
 
 result = app.invoke(initial_state)
@@ -28,3 +30,9 @@ print()
 print("Issues:")
 for issue in result["validation"]["issues"]:
     print("-", issue)
+
+    print()
+print("Execution History:")
+
+for message in result["messages"]:
+    print("-", message)

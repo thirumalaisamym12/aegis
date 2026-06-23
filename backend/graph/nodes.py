@@ -8,30 +8,63 @@ research_agent = ResearchAgent()
 code_agent = CodeAgent()
 validator_agent = ValidatorAgent()
 
+
 def supervisor_node(state):
     response = supervisor_agent.execute(state)
-    state["current_agent"] = "supervisor"
-    state["next_agent"] = response.next_agent
-    state["plan"] = response.metadata["plan"]
-    return state
+
+    return {
+        **state,
+        "current_agent": "supervisor",
+        "next_agent": response.next_agent,
+        "plan": response.metadata["plan"]
+    }
+
 
 def research_node(state):
     response = research_agent.execute(state)
-    state["current_agent"] = "research"
-    state["next_agent"] = response.next_agent
-    state["research"] = response.metadata
-    return state
+
+    return {
+        **state,
+        "current_agent": "research",
+        "next_agent": response.next_agent,
+        "research": response.metadata
+    }
+
 
 def code_node(state):
+
     response = code_agent.execute(state)
-    state["current_agent"] = "code"
-    state["next_agent"] = response.next_agent
-    state["code"] = response.metadata
-    return state
+
+    messages = state["messages"].copy()
+
+    messages.append(
+        f"Code attempt #{state['retry_count'] + 1}"
+    )
+
+    return {
+        **state,
+        "messages": messages,
+        "retry_count": state["retry_count"] + 1,
+        "current_agent": "code",
+        "next_agent": response.next_agent,
+        "code": response.metadata
+    }
+
 
 def validator_node(state):
+
     response = validator_agent.execute(state)
-    state["current_agent"] = "validator"
-    state["next_agent"] = response.next_agent
-    state["validation"] = response.metadata
-    return state
+
+    messages = state["messages"].copy()
+
+    messages.append(
+        f"Validator score = {response.metadata['quality_score']}"
+    )
+
+    return {
+        **state,
+        "messages": messages,
+        "current_agent": "validator",
+        "next_agent": response.next_agent,
+        "validation": response.metadata
+    }
