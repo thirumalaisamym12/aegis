@@ -14,7 +14,7 @@ class AgentState(TypedDict):
 
     messages: List[Dict[str, Any]]
 
-    memories: List[str]
+    memory: List[Dict[str, Any]]
 
     confidence: float
 
@@ -31,3 +31,7 @@ class AgentState(TypedDict):
     retry_count: int
     
     max_retries: int
+
+    reflection: Dict[str, Any]
+    
+    memory: List[Dict[str, Any]]

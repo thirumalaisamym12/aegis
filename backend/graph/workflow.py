@@ -5,7 +5,8 @@ from backend.graph.nodes import (
     supervisor_node,
     research_node,
     code_node,
-    validator_node
+    validator_node,
+    reflection_node
 )
 
 
@@ -21,7 +22,7 @@ def should_continue(state: AgentState):
         return "end"
 
     if retry_count < max_retries:
-        return "code"
+        return "reflection"
 
     return "end"
 
@@ -48,7 +49,14 @@ workflow.add_node(
     validator_node
 )
 
-workflow.set_entry_point("supervisor")
+workflow.add_node(
+    "reflection",
+    reflection_node
+)
+
+workflow.set_entry_point(
+    "supervisor"
+)
 
 workflow.add_edge(
     "supervisor",
@@ -65,11 +73,16 @@ workflow.add_edge(
     "validator"
 )
 
+workflow.add_edge(
+    "reflection",
+    "code"
+)
+
 workflow.add_conditional_edges(
     "validator",
     should_continue,
     {
-        "code": "code",
+        "reflection": "reflection",
         "end": END
     }
 )

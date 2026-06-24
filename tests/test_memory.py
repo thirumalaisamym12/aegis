@@ -1,4 +1,5 @@
 from backend.graph.workflow import app
+from backend.memory.memory_store import get_memories
 
 
 initial_state = {
@@ -18,23 +19,15 @@ initial_state = {
     "reflection": {},
     "memory": [],
     "retry_count": 0,
-    "max_retries": 3,
+    "max_retries": 3
 }
 
-result = app.invoke(initial_state)
+app.invoke(initial_state)
 
 print()
-print("Current Agent:", result["current_agent"])
-print()
-print("Approved:", result["validation"]["approved"])
-print("Quality Score:", result["validation"]["quality_score"])
-print()
-print("Issues:")
-for issue in result["validation"]["issues"]:
-    print("-", issue)
 
-    print()
-print("Execution History:")
+print("Stored Memories:")
 
-for message in result["messages"]:
-    print("-", message)
+for memory in get_memories():
+
+    print(memory)
