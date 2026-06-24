@@ -17,14 +17,19 @@ class ValidatorAgent(BaseAgent):
 
         quality_score = 0.95
 
-        approved = quality_score >= 0.8
+        approved = quality_score >= 0.9
+
+        next_agent = "end"
+
+        if not approved:
+            next_agent = "code"
 
         return AgentResponse(
             success=True,
             agent_name=self.name,
             content="Validation completed.",
             confidence=1.0,
-            next_agent="end",
+            next_agent=next_agent,
             metadata={
                 "approved": approved,
                 "quality_score": quality_score,
