@@ -13,6 +13,9 @@ class OllamaProvider(BaseLLMProvider):
 
         try:
 
+            print("Using model:", settings.OLLAMA_MODEL)
+            print("Calling:", f"{settings.OLLAMA_BASE_URL}/api/generate")
+
             response = requests.post(
                 f"{settings.OLLAMA_BASE_URL}/api/generate",
                 json={

@@ -15,7 +15,7 @@ class Settings:
 
     OLLAMA_MODEL = os.getenv(
         "OLLAMA_MODEL",
-        "qwen2.5:3b"
+        "qwen2.5:7b"
     )
 
     OPENAI_API_KEY = os.getenv(
