@@ -1,14 +1,13 @@
 from backend.agents.base_agent import BaseAgent
 from backend.graph.state import AgentState
 from backend.models.agent_response import AgentResponse
-from backend.planner.task_planner import TaskPlanner
-
+from backend.services.planner_service import PlannerService
 
 class SupervisorAgent(BaseAgent):
 
     def __init__(self):
         super().__init__("Supervisor")
-        self.planner = TaskPlanner()
+        self.planner = PlannerService()
 
     def execute(
         self,

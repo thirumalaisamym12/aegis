@@ -1,46 +1,32 @@
 from backend.agents.base_agent import BaseAgent
 from backend.graph.state import AgentState
 from backend.models.agent_response import AgentResponse
-
+from backend.services.research_service import ResearchService
 
 class ResearchAgent(BaseAgent):
 
     def __init__(self):
         super().__init__("Research")
+        self.research_service = ResearchService()
 
     def execute(
         self,
         state: AgentState
     ) -> AgentResponse:
 
-        requirements = [
-            "CRUD operations",
-            "Employee table",
-            "REST API endpoints",
-            "Validation",
-            "Error handling"
-        ]
-
-        technologies = [
-            "FastAPI",
-            "Pydantic",
-            "MySQL"
-        ]
-
-        constraints = [
-            "Follow REST standards",
-            "Use Python 3.12"
-        ]
+        task = state["task"]
+        plan = state["plan"]
+        research = self.research_service.analyze(
+            task,
+            plan
+            )
 
         return AgentResponse(
             success=True,
             agent_name=self.name,
-            content="Research completed.",
+            content="AI research completed.",
             confidence=0.95,
             next_agent="code",
-            metadata={
-                "requirements": requirements,
-                "technologies": technologies,
-                "constraints": constraints
-            }
-        )
+            metadata=research
+)
+    

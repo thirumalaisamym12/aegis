@@ -1,8 +1,15 @@
 from backend.agents.research.research_agent import ResearchAgent
+from backend.services.planner_service import PlannerService
 
+planner = PlannerService()
+
+task = "Build Employee Management API"
+
+plan = planner.generate_plan(task)
 
 state = {
-    "task": "Build Employee Management API"
+    "task": task,
+    "plan": plan
 }
 
 agent = ResearchAgent()
